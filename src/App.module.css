@@ -1,0 +1,47 @@
+:root {
+  --font-primary: "Inter";
+
+  --color-primary: #222529;
+  --color-secondary: #5d606b;
+
+  --color-purple: #8c79f6;
+  --color-green: #5cc1ac;
+  --color-yellow: #f6c879;
+  --color-red: #ba3131;
+
+  --background-color-light: white;
+  --background-color-dark: #222529;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  padding-top: 30px;
+  font-family: var(--font-primary);
+  color: var(--color-primary);
+  line-height: 1.6;
+  background-color: var(--background-color-light);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+@media (max-width: 770px) {
+  .container {
+    margin: 0 10%;
+  }
+}
