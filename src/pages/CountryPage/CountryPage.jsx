@@ -124,6 +124,7 @@ const CountryPage = () => {
       setCountry(await fetchCountry(match.params.countryId));
     };
     fetchAPI();
+    // eslint-disable-next-line
   }, []);
 
   return (
