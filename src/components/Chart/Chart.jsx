@@ -1,88 +1,55 @@
-import React, { useState, useEffect } from "react";
-import { Line, Bar } from "react-chartjs-2";
+import { ResponsiveChoropleth } from "@nivo/geo";
+
+import * as featureCollection from "../../lib/features.json";
 
 import styles from "./Chart.module.css";
 
-import { fetchDailyData } from "../../api";
-
-const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
-  const [dailyData, setDailyData] = useState([]);
-
-  useEffect(() => {
-    const fetchAPI = async () => {
-      setDailyData(await fetchDailyData());
-    };
-
-    fetchAPI();
-  }, []);
-
-  const lineChart = dailyData.length ? (
-    <Line
-      data={{
-        labels: dailyData.map(({ date }) => date),
-        datasets: [
-          {
-            data: dailyData.map(({ confirmed }) => confirmed),
-            label: "Infected",
-            borderColor: "#3333ff",
-            fill: true,
-          },
-          {
-            data: dailyData.map(({ deaths }) => deaths),
-            label: "Deaths",
-            borderColor: "red",
-            backgroundColor: "rgba(255,0,0,0.5)",
-            fill: true,
-          },
-        ],
-      }}
-      options={{
-        scales: {
-          xAxes: [
+const Chart = ({ data }) => {
+  const worldMap = data ? (
+    <ResponsiveChoropleth
+      data={data}
+      features={featureCollection.features}
+      margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+      colors="nivo"
+      domain={[0, 1000000]}
+      unknownColor="#666666"
+      label="properties.name"
+      valueFormat=".2s"
+      projectionTranslation={[0.5, 0.5]}
+      projectionRotation={[0, 0, 0]}
+      enableGraticule={true}
+      graticuleLineColor="#dddddd"
+      borderWidth={0.5}
+      borderColor="#152538"
+      legends={[
+        {
+          anchor: "bottom-left",
+          direction: "column",
+          justify: true,
+          translateX: 20,
+          translateY: -100,
+          itemsSpacing: 0,
+          itemWidth: 94,
+          itemHeight: 18,
+          itemDirection: "left-to-right",
+          itemTextColor: "#444444",
+          itemOpacity: 0.85,
+          symbolSize: 18,
+          effects: [
             {
-              gridLines: {
-                color: "rgba(255,255,255,0.1)",
-              },
-            },
-          ],
-          yAxes: [
-            {
-              gridLines: {
-                color: "rgba(255,255,255,0.1)",
+              on: "hover",
+              style: {
+                itemTextColor: "#000000",
+                itemOpacity: 1,
               },
             },
           ],
         },
-      }}
+      ]}
     />
   ) : null;
 
-  const barChart = confirmed ? (
-    <Bar
-      data={{
-        labels: ["Infected", "Recovered", "Deaths"],
-        datasets: [
-          {
-            label: "People",
-            backgroundColor: [
-              "rgba(0, 0, 255, 0.5)",
-              " rgba(0, 255, 0, 0.5)",
-              "rgba(255, 0, 0, 0.5)",
-            ],
-            data: [confirmed.value, recovered.value, deaths.value],
-          },
-        ],
-      }}
-      options={{
-        legend: { display: false },
-        title: { display: true, text: `Current State in ${country}` },
-      }}
-    />
-  ) : null;
-
-  return (
-    <div className={styles.container}>{country ? barChart : lineChart}</div>
-  );
+  return <div className={styles.container}>{worldMap}</div>;
 };
 
 export default Chart;

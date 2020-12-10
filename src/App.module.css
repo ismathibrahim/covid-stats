@@ -5,8 +5,8 @@
   --color-secondary: #5d606b;
 
   --color-purple: #8c79f6;
-  --color-green: #5cc1ac;
-  --color-yellow: #f6c879;
+  --color-green: #00b0a7;
+  --color-yellow: #f8b746;
   --color-red: #ba3131;
 
   --background-color-light: white;
@@ -30,7 +30,7 @@ body {
   font-family: var(--font-primary);
   color: var(--color-primary);
   line-height: 1.6;
-  background-color: var(--background-color-light);
+  background-color: #f1f2f7;
 }
 
 .container {
@@ -38,10 +38,27 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding: 0 5vw;
 }
 
 @media (max-width: 770px) {
   .container {
     margin: 0 10%;
+    padding: 0;
   }
+}
+
+.footer {
+  margin: 20px auto;
+}
+
+.footerLink {
+  text-decoration: underline;
+  color: var(--color-primary);
+}
+
+.siteTitle {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 3rem;
 }

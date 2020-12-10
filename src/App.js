@@ -1,43 +1,47 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import { Summary, CountryPicker, Chart } from "./components";
+import HomePage from "./pages/HomePage/HomePage";
+import CountryPage from "./pages/CountryPage/CountryPage";
 
 import styles from "./App.module.css";
 
-import { fetchData } from "./api/index.js";
-
 class App extends Component {
-  state = {
-    data: {},
-    country: "",
-  };
-
-  async componentDidMount() {
-    const fetchedData = await fetchData();
-    this.setState({ data: fetchedData });
-  }
-
-  handleCountryChange = async (country) => {
-    console.log(country);
-    const fetchedData = await fetchData(country);
-
-    this.setState({ data: fetchedData, country: country });
-  };
-
   render() {
-    const { data, country } = this.state;
-
     return (
-      <div className={styles.container}>
-        <h1>COVID-19 Statistics</h1>
-        <p>
-          Data source:{" "}
-          <a href="https://covid19.mathdro.id/api/">covid19.mathdro.id/api/</a>
-        </p>
-        <Summary data={data} />
-        <CountryPicker handleCountryChange={this.handleCountryChange} />
-        <Chart data={data} country={country} />
-      </div>
+      <Router>
+        <div className={styles.container}>
+          <Link to="/">
+            <h4 className={styles.siteTitle}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+              >
+                <path fill="none" d="M0 0H24V24H0z" />
+                <path d="M13.717 1.947l3.734 1.434-.717 1.867-.934-.359-.746 1.945c.779.462 1.444 1.094 1.945 1.846l1.903-.847-.407-.914 1.827-.813 1.627 3.654-1.827.813-.407-.913-1.902.847c.122.477.187.978.187 1.493 0 .406-.04.803-.117 1.187l1.944.746.358-.933 1.868.717-1.434 3.734-1.867-.717.358-.933-1.944-.747c-.462.779-1.094 1.444-1.846 1.945l.847 1.903.914-.407.813 1.827-3.654 1.627-.813-1.827.913-.407-.847-1.902c-.477.122-.978.187-1.493.187-.407 0-.804-.04-1.188-.118l-.746 1.945.934.358-.717 1.868-3.734-1.434.717-1.867.932.358.748-1.944C8.167 16.704 7.502 16.072 7 15.32l-1.903.847.407.914-1.827.813-1.627-3.654 1.827-.813.406.914 1.903-.848C6.065 13.016 6 12.515 6 12c0-.406.04-.803.117-1.187l-1.945-.746-.357.933-1.868-.717L3.381 6.55l1.867.717-.359.933 1.945.747C7.296 8.167 7.928 7.502 8.68 7l-.847-1.903-.914.407-.813-1.827L9.76 2.051l.813 1.827-.913.407.847 1.902C10.984 6.065 11.485 6 12 6c.406 0 .803.04 1.187.117l.745-1.945L13 3.815l.717-1.868zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm-.5 4.866c.478.276.642.888.366 1.366-.276.478-.888.642-1.366.366-.478-.276-.642-.888-.366-1.366.276-.478.888-.642 1.366-.366zM14 11c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1zm-2.134-1.232c.276.478.112 1.09-.366 1.366s-1.09.112-1.366-.366-.112-1.09.366-1.366 1.09-.112 1.366.366z" />
+              </svg>
+              COVID-19 Statistics
+            </h4>
+          </Link>
+
+          <Switch>
+            <Route path="/country/:countryId">
+              <CountryPage />
+            </Route>
+            <Route path="/">
+              <HomePage />
+            </Route>
+          </Switch>
+          <div className={styles.footer}>
+            &copy; 2020 Ismath Ibrahim. Data source:{" "}
+            <a href="https://disease.sh/" className={styles.footerLink}>
+              disease.sh
+            </a>
+          </div>
+        </div>
+      </Router>
     );
   }
 }
