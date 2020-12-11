@@ -108,7 +108,7 @@ const CountriesTable = ({ countries }) => {
                 styles.hidden_medium
               )}
             >
-              <div>Cases per m.</div>
+              <div>Cases per mil.</div>
               {value === "casesPerOneMillion" && (
                 <SortArrow direction={direction} />
               )}
@@ -121,7 +121,7 @@ const CountriesTable = ({ countries }) => {
                 styles.hidden_medium
               )}
             >
-              <div>Deaths per m</div>
+              <div>Deaths per mil.</div>
               {value === "deathsPerOneMillion" && (
                 <SortArrow direction={direction} />
               )}
