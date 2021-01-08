@@ -139,15 +139,17 @@ const CountriesTable = ({ countries }) => {
                     <img src={country.countryInfo.flag} alt={country.country} />
                   </div>
                   <div className={styles.cell}>{country.country}</div>
-                  <div className={styles.cell}>{country.cases || 0}</div>
-                  <div className={classnames(styles.cell, styles.hidden_small)}>
-                    {country.recovered || 0}
+                  <div className={styles.cell}>
+                    {country.cases.toLocaleString() || "N/A"}
                   </div>
                   <div className={classnames(styles.cell, styles.hidden_small)}>
-                    {country.active || 0}{" "}
+                    {country.recovered.toLocaleString() || "N/A"}
                   </div>
                   <div className={classnames(styles.cell, styles.hidden_small)}>
-                    {country.deaths || 0}{" "}
+                    {country.active.toLocaleString() || "N/A"}{" "}
+                  </div>
+                  <div className={classnames(styles.cell, styles.hidden_small)}>
+                    {country.deaths.toLocaleString() || "N/A"}{" "}
                   </div>
                   <div
                     className={classnames(
@@ -156,7 +158,7 @@ const CountriesTable = ({ countries }) => {
                       styles.hidden_medium
                     )}
                   >
-                    {country.casesPerOneMillion || 0}{" "}
+                    {country.casesPerOneMillion.toLocaleString() || "N/A"}{" "}
                   </div>
                   <div
                     className={classnames(
@@ -165,7 +167,7 @@ const CountriesTable = ({ countries }) => {
                       styles.hidden_medium
                     )}
                   >
-                    {country.deathsPerOneMillion || 0}{" "}
+                    {country.deathsPerOneMillion.toLocaleString() || "N/A"}{" "}
                   </div>
                 </div>
               </div>

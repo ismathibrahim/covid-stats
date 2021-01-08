@@ -10,19 +10,19 @@ const TopCountry = ({ country }) => (
         <p className={styles.title} style={{ color: "var(--color-purple)" }}>
           Confirmed
         </p>
-        <p className={styles.digits}>{country.cases}</p>
+        <p className={styles.digits}>{country.cases.toLocaleString()}</p>
       </div>
       <div>
         <p className={styles.title} style={{ color: "var(--color-green)" }}>
           Recoveries
         </p>
-        <p className={styles.digits}>{country.recovered}</p>
+        <p className={styles.digits}>{country.recovered.toLocaleString()}</p>
       </div>
       <div>
         <p className={styles.title} style={{ color: "var(--color-red)" }}>
           Deaths
         </p>
-        <p className={styles.digits}>{country.deaths}</p>
+        <p className={styles.digits}>{country.deaths.toLocaleString()}</p>
       </div>
     </div>
   </div>
