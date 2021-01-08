@@ -35,7 +35,11 @@ class App extends Component {
             </Route>
           </Switch>
           <div className={styles.footer}>
-            &copy; 2020 Ismath Ibrahim. Data source:{" "}
+            Made with ❤️ by{" "}
+            <a href="https://ismath.dev/" className={styles.footerLink}>
+              Ismath Ibrahim
+            </a>
+            . Data source:{" "}
             <a href="https://disease.sh/" className={styles.footerLink}>
               disease.sh
             </a>
