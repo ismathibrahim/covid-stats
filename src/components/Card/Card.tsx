@@ -3,7 +3,14 @@ import CountUp from "react-countup";
 
 import styles from "./Card.module.css";
 
-const Card = ({ title, number, description, accentColor }) => {
+interface CardProps {
+  title: string;
+  number: number;
+  description: string;
+  accentColor: string;
+}
+
+const Card = ({ title, number, description, accentColor }: CardProps) => {
   return (
     <div className={styles.card}>
       <h4 style={{ color: accentColor }}>{title}</h4>

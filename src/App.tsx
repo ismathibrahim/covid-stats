@@ -35,7 +35,7 @@ class App extends Component {
             </Route>
           </Switch>
           <div className={styles.footer}>
-            Made with ❤️ by{" "}
+            Made by{" "}
             <a href="https://ismath.dev/" className={styles.footerLink}>
               Ismath Ibrahim
             </a>

@@ -1,40 +1,45 @@
 import React from "react";
-import { Card } from "../../components";
+import { Card } from "..";
+import { GlobalStats } from "../../lib/types";
 
 import styles from "./Summary.module.css";
 
-const Cards = ({ data: { cases, recovered, deaths, active } }) => {
-  if (!cases) {
-    return "Loading...";
+interface Props {
+  data: GlobalStats | undefined;
+}
+
+const Summary = ({ data }: Props) => {
+  if (data === undefined) {
+    return <div>Loading...</div>;
   }
   return (
     <div className={styles.container}>
       <Card
         accentColor="var(--color-purple)"
         title="Confirmed"
-        number={cases}
+        number={data?.cases}
         description="Number of confirmed infections"
       />
       <Card
         accentColor="var(--color-green)"
         title="Recovered"
-        number={recovered}
+        number={data?.recovered}
         description="Number of recoveries "
       />
       <Card
         accentColor="var(--color-yellow)"
         title="Active"
-        number={active}
+        number={data?.active}
         description="Number of active infections"
       />
       <Card
         accentColor="var(--color-red)"
         title="Deaths"
-        number={deaths}
+        number={data?.deaths}
         description="Number of deaths"
       />
     </div>
   );
 };
 
-export default Cards;
+export default Summary;

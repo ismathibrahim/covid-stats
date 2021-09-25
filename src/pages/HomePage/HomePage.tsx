@@ -2,31 +2,32 @@ import React, { useEffect, useState } from "react";
 
 import {
   Summary,
-  Chart,
+  Choropleth,
   TopCountries,
   CountriesTable,
   SearchInput,
-} from "../../components/";
+} from "../../components";
 
 import styles from "./HomePage.module.css";
 
-import { fetchData, fetchCountries } from "../../api";
+import { fetchGlobalStats, fetchCountries } from "../../api";
+import { CountryStats, GlobalStats, MapCountry } from "../../lib/types";
 
 const HomePage = () => {
-  const [data, setData] = useState([]);
-  const [countries, setCountries] = useState([]);
-  const [topCountries, setTopCountries] = useState([]);
-  const [mapData, setMapData] = useState([]);
+  const [globalStats, setGlobalStats] = useState<GlobalStats>();
+  const [countries, setCountries] = useState<CountryStats[]>([]);
+  const [topCountries, setTopCountries] = useState<CountryStats[]>([]);
+  const [mapData, setMapData] = useState<MapCountry[]>([]);
 
   useEffect(() => {
     const fetchAPIAll = async () => {
-      setData(await fetchData());
+      setGlobalStats(await fetchGlobalStats());
     };
     const fetchAPICountries = async () => {
       const unFilteredCountries = await fetchCountries();
 
       setMapData(
-        await unFilteredCountries.map((country) => ({
+        await unFilteredCountries.map((country: CountryStats) => ({
           id: country.countryInfo.iso3,
           value: country.cases,
         }))
@@ -34,7 +35,7 @@ const HomePage = () => {
 
       setTopCountries(
         await unFilteredCountries
-          .sort((a, b) => {
+          .sort((a: CountryStats, b: CountryStats) => {
             return b.cases - a.cases;
           })
           .slice(0, 3)
@@ -42,7 +43,7 @@ const HomePage = () => {
 
       setCountries(
         await unFilteredCountries.filter(
-          (country) =>
+          (country: CountryStats) =>
             country.country !== "Diamond Princess" &&
             country.country !== "MS Zaandam"
         )
@@ -54,11 +55,11 @@ const HomePage = () => {
 
   const [keyword, setKeyword] = useState("");
 
-  const filteredCountries = countries.filter((country) =>
+  const filteredCountries = countries.filter((country: CountryStats) =>
     country.country.toLowerCase().includes(keyword)
   );
 
-  const onInputChange = (e) => {
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setKeyword(e.target.value.toLowerCase());
   };
@@ -66,9 +67,9 @@ const HomePage = () => {
   return (
     <div className={styles.homePage}>
       <h1>Global cases</h1>
-      <Summary data={data} />
+      <Summary data={globalStats} />
       <div className={styles.overviewArea}>
-        <Chart data={mapData} />
+        <Choropleth data={mapData} />
         <TopCountries countries={topCountries} />
       </div>
       <SearchInput placeholder="Filter countries" onChange={onInputChange} />

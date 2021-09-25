@@ -5,8 +5,13 @@ import { KeyboardArrowUpRounded } from "@material-ui/icons";
 import classnames from "classnames";
 
 import styles from "./CountriesTable.module.css";
+import { CountryStats } from "../../lib/types";
 
-const orderBy = (countries, value, direction) => {
+const orderBy = (
+  countries: CountryStats[],
+  value: string,
+  direction: string
+) => {
   if (direction === "asc") {
     return [...countries].sort((a, b) => (a[value] > b[value] ? 1 : -1));
   }
@@ -18,7 +23,7 @@ const orderBy = (countries, value, direction) => {
   return countries;
 };
 
-const SortArrow = ({ direction }) => {
+const SortArrow = ({ direction }: { direction: string }) => {
   if (!direction) {
     return <></>;
   }
@@ -38,9 +43,9 @@ const SortArrow = ({ direction }) => {
   }
 };
 
-const CountriesTable = ({ countries }) => {
-  const [direction, setDirection] = useState();
-  const [value, setValue] = useState();
+const CountriesTable = ({ countries }: { countries: CountryStats[] }) => {
+  const [direction, setDirection] = useState<string>("");
+  const [value, setValue] = useState<string>("");
 
   const orderedCountries = orderBy(countries, value, direction);
 
@@ -50,11 +55,11 @@ const CountriesTable = ({ countries }) => {
     } else if (direction === "desc") {
       setDirection("asc");
     } else {
-      setDirection(null);
+      setDirection("");
     }
   };
 
-  const setValueAndDirection = (value) => {
+  const setValueAndDirection = (value: string) => {
     switchDirection();
     setValue(value);
   };

@@ -1,8 +1,9 @@
 import React from "react";
 
+import { CountryStats } from "../../lib/types";
 import styles from "./TopCountries.module.css";
 
-const TopCountry = ({ country }) => (
+const TopCountry = ({ country }: { country: CountryStats }) => (
   <div className={styles.country}>
     <p>{country.country}</p>
     <div className={styles.figuresContainer}>
@@ -28,12 +29,14 @@ const TopCountry = ({ country }) => (
   </div>
 );
 
-const TopCountries = ({ countries }) => {
+const TopCountries = ({ countries }: { countries: CountryStats[] }) => {
   return (
     <div className={styles.topCountries}>
       <h4>Top countries affected</h4>
       {countries ? (
-        countries.map((country) => <TopCountry country={country} />)
+        countries.map((country: CountryStats) => (
+          <TopCountry country={country} key={country.countryInfo._id} />
+        ))
       ) : (
         <p>Loading</p>
       )}
